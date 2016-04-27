@@ -31,9 +31,17 @@ Example: (Sheet0) census['A3'] represents the answers to "What is your gender?" 
 
 # Contribute
 
+##### To this repo
 The current dataset, a 3-sheet excel document needs to be refined to include:
 
 
 1. smarter column names (240+ questions)
 2. cleaner data (remove NaNs, convert to binary questions or categorical variables)
 3. plotting functions for effective exploratory data analysis
+
+
+##### to Homeless Directly
+
+1. [Enjoy a meal with them every Sunday](http://www.believersinchristministry.com/)
+2. [Donate to Homefirst](http://www.homefirstscc.org/)
+3. [Check out the awesome, life-changing work CityTeam San Jose is doing](https://www.cityteam.org/san-jose/)
