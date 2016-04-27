@@ -3,13 +3,7 @@
 ##### The most recent homeless census (2015) polled 953 of the 7,000 homeless in Santa Clara County. 
 Santa Clara County stretches from San Jose to Palo Alto, and up until recently, was home to the largest homeless encampment in America (the Jungle).
 
-##### This repository is dedicated to exploring data,
-through Python and R. 
-
-##### understanding root problems of homelessness
-by finding trends and strong statistical relationships across age, gender, health conditions, length of homelessness, reasons for homelessness, family conditions, and location.
-
-##### and finding effective solutions.
+**This repository is dedicated to exploring data,** through Python and R, **understanding root problems of homelessness,** by finding trends and strong statistical relationships across age, gender, health conditions, length of homelessness, reasons for homelessness, family conditions, and location; **and finding effective solutions.**
 
 
 # The Data
