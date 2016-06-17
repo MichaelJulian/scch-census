@@ -15,7 +15,7 @@ def load_variables():
 
 def load_values():
     value_labels = pd.read_excel('data/SantaClaraCountyHomelessCensus.xlsx', sheetname=2, skiprows=2, skipfooter=1)
-    value_labels = value_labels.ix[:,1:]
+    value_labels = value_labels.ix[:, 1:]
     value_labels.columns = ['Variable', 'Value', 'Label']
     for ix, variable in enumerate(value_labels['Variable']):
         if type(variable) != float:
