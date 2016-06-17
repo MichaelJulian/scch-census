@@ -50,4 +50,4 @@ if __name__ == '__main__':
     census = fill_NAs(census)
     census = replace_answers(census, variables, values)
     census = replace_columns(census, variables, values)
-    census.to_csv('scch_census.csv', index=False)
+    census.to_csv('data/scch_census.csv', index=False)
