@@ -28,14 +28,14 @@ def load_values():
 def fill_NAs(census):
     # Fill NAs with 0s
     for col in census.columns[7:]:
-        census[col] = census[col].fillna('No Answer')
-        census[col] = census[col].astype(str)
+        census[col] = census[col].fillna(0)
+        census[col] = census[col].astype(int)
     return census
 
 def replace_answers(census, variables, values):
     # Replace Data Cells with Intelligible Strings
     for ix, row in values[25:].iterrows():
-        val = str(float(row['Value']))
+        val = int(float(row['Value']))
         var = row['Variable']
         lab = row['Label']
         census[var] = census[var].replace(val, lab)
@@ -50,4 +50,4 @@ if __name__ == '__main__':
     census = fill_NAs(census)
     census = replace_answers(census, variables, values)
     census = replace_columns(census, variables, values)
-    census.to_csv('data/scch_census.csv', index=False)
+    census.to_csv('data/scch_census_ints.csv', index=False)
