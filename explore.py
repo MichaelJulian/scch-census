@@ -3,13 +3,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import datetime
+from sklearn.cluster import k_means
 
 def load_csv():
     df = pd.read_csv("data/scch_census_ints.csv", parse_dates=[6])
 
     ages = (datetime.date.today() - df['Date of Birth'])
     df['age'] = ages / np.timedelta64(1, 'Y')
-
+    df['Ethnicity: Hispanic'] = (df['Ethnicity: Hispanic'] == 'Yes').astype(int)
+    df['Everyone'] = 1
+    df['Everyone'][0] = 0
     return df
 
 def convert_int(df, column):
@@ -37,6 +40,20 @@ ie Prevention: Transportation is an individual tick and category is Prevention.
 All data is subsetted by a given column where values == 1.
 '''
 
+def title(category):
+    category = category.replace(':', '')
+    dic = {'Reason': 'Reasons for Homelessness as {}',
+           'Housing Obstacle': 'Reported Housing Obstacles for Homeless as {}',
+           'Job Obstacle': 'Reported Job Obstacles for Homeless as {}',
+           'Government': 'Government Assistance Received by Homeless as {}',
+           'No Assistance': 'Reasons for not Receiving Assistance as {}',
+           'Ethnicity': 'Ethnicity for Homeless where {}'}
+    if category not in dic:
+        title = 'Homeless Statistics'
+    else:
+        title = dic[category]
+    return title
+
 def plot_subset(df, subset, category, prob=True):
     cols = df.columns[df.columns.str.contains(category)]
     if prob:
@@ -45,32 +62,17 @@ def plot_subset(df, subset, category, prob=True):
     else:
         xtabs = [pd.crosstab(df[subset], df[col]) for col in cols]
     vals = [xtab.get_values()[1, 1] for xtab in xtabs]
-    cols = [col.replace(category, '') for col in cols]
+    cols = [col.replace(category, '').replace(':', '') for col in cols]
     ax = sns.barplot(cols, vals)
+    plt.title(title(category).format(subset))
+    plt.xlabel(category + '\n\n\n')
     plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right')
     plt.show()
 
-# def plot_subset(boolean, term):
-#     subset =
-#     pass
-
-#
-#
-#
-#
-# xtab = pd.crosstab(rating_bins,
-#             df['churn']).apply(lambda r: r/r.sum(), axis=1)
-# sns.pointplot(x=xtab.index, y=xtab[1])
-# plt.xlabel('Rating of Driver Intervals')
-# plt.ylabel('Probability of Churn')
-# plt.title('Probability of Churn based on Rating of Driver')
-# plt.show()
-#
-#
-# xtab = pd.crosstab(df['hasnt_rated'],
-#             df['churn']).apply(lambda r: r/r.sum(), axis=1)
-# sns.barplot(x=xtab.index, y=xtab[1])
-# plt.xlabel("Has Rated Driver (Left) vs Hasn't (Right)")
-# plt.ylabel("Probability")
-# plt.title("Missing Rating of Driver vs Churn Rate")
-# plt.show()
+if __name__ == '__main__':
+    df = load_csv()
+    print '''
+    Examples: plot_subset(df, subset='Everyone', category='Job Obstacle')
+    plot_subset(df, subset='Ethnicity: White', category='Reason')
+    plot_subset(df, subset='Reason: Lost Job', category='Prevention')
+    '''
