@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import datetime
-from sklearn.cluster import k_means
 
 def load_csv():
     df = pd.read_csv("data/scch_census_ints.csv", parse_dates=[6])
@@ -61,7 +60,7 @@ def plot_subset(df, subset, category, prob=True):
                                                         axis=1) for col in cols]
     else:
         xtabs = [pd.crosstab(df[subset], df[col]) for col in cols]
-    vals = [xtab.get_values()[1, 1] for xtab in xtabs]
+    vals = [xtab[1][1] for xtab in xtabs]
     cols = [col.replace(category, '').replace(':', '') for col in cols]
     ax = sns.barplot(cols, vals)
     plt.title(title(category).format(subset))
