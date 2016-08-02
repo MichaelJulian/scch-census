@@ -24,10 +24,10 @@ The anonymized data contains questions that include:
 # Explorations
 
 ## Heatmap: Job Obstacles and Reason for Homelessness
-![]('plots/heatmap_reasons_job.png')
+![](plots/heatmap_reasons_job.png)
 
 ## Heatmap: Job Obstacles and Reason for Homelessness for Females only
-![]('plots/heatmap_reasons_job_female.png')
+![](plots/heatmap_reasons_job_female.png)
 We can observe that subsetted by females, divorce/breakup becomes a much more likely answer as a reason for homelessness.
 
 
