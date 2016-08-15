@@ -22,7 +22,9 @@ def title(category):
 
 def heatmap(df, category1, category2, prob=True, cat1_sort=1):
     cols1 = df.columns[df.columns.str.contains(category1)][::cat1_sort]
+    cols1 = df[cols1].sum()[df[cols1].sum() > 0].index
     cols2 = df.columns[df.columns.str.contains(category2)]
+    cols2 = df[cols2].sum()[df[cols2].sum() > 0].index
     mat = []
     if prob:
         for col1 in cols1:
@@ -37,9 +39,14 @@ def heatmap(df, category1, category2, prob=True, cat1_sort=1):
     ax = sns.heatmap(mat)
     cols2 = [col.replace(category2, '').replace(':', '') for col in cols2]
     cols1 = [col.replace(category1, '').replace(':', '') for col in cols1]
-    plt.xticks(np.arange(len(cols2))+.5, cols2, rotation=30)
-    plt.yticks(np.arange(len(cols1))+.5, cols1[::-1], rotation=0)
+    plt.xticks(np.arange(len(cols2)) + .5, cols2, rotation=30)
+    plt.yticks(np.arange(len(cols1)) + .5, cols1[::-1], rotation=0)
     plt.title(title(category1) + ' (y-axis) versus ' + title(category2) + ' (x-axis)\n')
     plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
     plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right')
     plt.show()
+
+
+if __name__ == '__main__':
+    df = load_csv()
+    heatmap(df[df['Domestic Abuse (Current)'] == 'Yes'], 'Services:', 'Prevention:', prob=False)

@@ -5,7 +5,7 @@ import numpy as np
 import datetime
 
 def load_csv():
-    df = pd.read_csv("data/scch_census_ints.csv", parse_dates=[6])
+    df = pd.read_csv("../data/scch_census_ints.csv", parse_dates=[6])
 
     ages = (datetime.date.today() - df['Date of Birth'])
     df['age'] = ages / np.timedelta64(1, 'Y')

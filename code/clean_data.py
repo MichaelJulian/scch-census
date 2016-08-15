@@ -5,12 +5,12 @@ import numpy as np
 
 # Load Data
 def load_data():
-    census = pd.read_excel('data/SantaClaraCountyHomelessCensus.xlsx',
+    census = pd.read_excel('../data/SantaClaraCountyHomelessCensus.xlsx',
                            sheetname=0)
     return census
 
 def load_variables():
-    variable_labels = pd.read_excel('data/SantaClaraCountyHomelessCensus.xlsx',
+    variable_labels = pd.read_excel('../data/SantaClaraCountyHomelessCensus.xlsx',
                                     sheetname=1, skiprows=3)
     variable_labels.ix[variable_labels['LABEL'] == '<ninguno>', 'LABEL'] = \
         variable_labels.ix[variable_labels['LABEL'] == '<ninguno>', 'Variable']
@@ -18,7 +18,7 @@ def load_variables():
     return variable_labels
 
 def load_values():
-    value_labels = pd.read_excel('data/SantaClaraCountyHomelessCensus.xlsx',
+    value_labels = pd.read_excel('../data/SantaClaraCountyHomelessCensus.xlsx',
                                  sheetname=2, skiprows=2, skipfooter=1)
     value_labels = value_labels.ix[:, 1:]
     value_labels.columns = ['Variable', 'Value', 'Label']
@@ -50,4 +50,4 @@ if __name__ == '__main__':
     census = fill_NAs(census)
     census = replace_answers(census, variables, values)
     census = replace_columns(census, variables, values)
-    census.to_csv('data/scch_census_ints.csv', index=False)
+    census.to_csv('../data/scch_census_ints.csv', index=False)

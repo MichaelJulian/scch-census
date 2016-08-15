@@ -13,6 +13,7 @@ The data has been cleaned to a single csv file, where columns are survey questio
 
 ### Survey questions
 The anonymized data contains questions that include:
+
 1. Ethnicity, Gender, Sexuality
 1. Reported reasons for homelessness
 1. Obstacles to obtaining a job
@@ -34,6 +35,8 @@ We can observe that subsetted by females, divorce/breakup becomes a much more li
 # Contribute
 
 ##### To this repo
+
+1. Grab the data, make some visualizations
 
 
 ##### to Homeless Directly

@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+
+  <br>
+  <br>
+  <br>
+  <div class="jumbotron">
+  <h1>Welcome to homestreet</h1>
+  <p>
+    <strong>Purpose: </strong> to aid homeless outreach organizations in their
+    care for those living on the streets by providing analytics, insights,
+    and an exploratory platform to better understand those living at our doorstep.
+  </p>
+  <p>
+    <strong>Author: </strong> Michael Julian - August 2016 - a capstone project for Galvanize's Data Science Immersive.
+  </p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+  </div>
+<hr>
+
+<!-- ************************ -->
+<!-- ** Understanding Data ** -->
+<!-- ************************ -->
+
+  <div class="row">
+    <div class="page-header">
+      <h1>Understanding <small>the Data</small></h1>
+    </div>
+    <div class="col-sm-4">
+      <p>
+      <strong> Collection: </strong> The Point-in-Time Census is conducted every
+      two years by surveying thousands of homeless across America.
+      This analysis was completed on the Santa Clara County set,
+      conducted by Applied Survey Research and obtained through the San Jose
+      Homeless Outreach Team.
+      </p>
+    </div>
+    <div class="col-sm-4">
+      <p>
+      <strong> Content: </strong> The census contains information regarding
+      Ethnicity, Sexuality, Reasons for homelessness, Prevention, Government Assistance,
+      Household Information, and Health Conditions.
+      </p>
+    </div>
+    <div class="col-sm-4">
+      <p>
+      <strong> Composition: </strong> The data was cleaned from separate excel files and condensed
+      to dummy variables that take the value of 1 or 0, depending on if the survey-taker
+      answered "Yes."
+      </p>
+    </div>
+  </div>
+  <hr>
+
+<!-- ************************ -->
+<!-- ** Exploring The Data ** -->
+<!-- ************************ -->
+
+    <div class="row">
+      <div class="page-header">
+        <h1>Exploring <small>the Data</small></h1>
+        You can explore this data in customizable detail on the <a href="#">Explore</a> page.
+      </div>
+    <div class="col-sm-9">
+      <div class="panel panel-default">
+        <div class="panel-heading">Reasons for Homelessness</div>
+        <div class="panel-body">
+          <img src="/static/heatmap_reasons_job.png" alt="" style="width: 100%"/>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="well well-lg">
+        <p>
+          <strong>y-axis</strong> represents self-reported reasons for homelessness.
+          <strong>x-axis</strong> represents self-reported obstacles to getting or maintaining a job.
+        </p>
+        <p>
+          Beyond obvious relationships like drug/alcohol impeding a person's ability to hold a job,
+          we can also use this heatmap to view most notorious problems for not holding a job:
+          lack of transportation, address, and lack of clothing/showers.
+        </p>
+        <p>
+          In this plot, the "heat" is represented by the number of respondents
+          that gave an affirmative answer to both the corresponding row and column
+        </p>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+<!-- ************************ -->
+<!-- ** Analyzing The Data ** -->
+<!-- ************************ -->
+
+  <div class="row">
+    <div class="page-header">
+      <h1>Analyzing <small>the Data</small></h1>
+      Predict High-Risk Condition
+    </div>
+    <div class="col-sm-6">
+      <div class="well well-lg">
+        <p>
+          <strong>Model Requirements:</strong>
+        </p>
+        <ul>
+          <li>Strong Interpretability</li>
+          <li>Handle Imbalanced Classes</li>
+          <li>Favor False Positives over False Negatives</li>
+        </ul>
+        <p>
+          <strong>Reasoning:</strong> Homeless outreach teams and organizations
+          that deliver aid may not have the resources to input data into
+          a neural network that provides non-intuitive or black-box results.
+          For this reason, Decision Tree Classifiers (strong interpretability) and
+          Logistic Regression models (medium interpretability) will be utilized.
+
+          Second, we should favor a model that favors false positives over false negatives
+          because of the higher cost to society of a high-risk homeless going untreated.
+        </p>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <br><br><br>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Defining High-Risk Condition</div>
+        <div class="panel-body">
+          <p>
+            A person will be defined as <strong> "high-risk" </strong> if they report:
+          </p>
+          <ul>
+            <li>Having a life-threatening health condition</li>
+            <li>Being a victim of domestic abuse</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Imputing Data</div>
+        <div class="panel-body">
+          <p>
+            <strong> Issue: </strong> Some respondents refuse to answer a question.
+            This is a problem that becomes magnified in imbalanced classes and low sample sizes.
+            Due to the wide nature (relative to respondents) of the dataset, synthetic minority oversampling
+            would not provide trustworthy observations.
+          </p>
+          <p>
+            <strong> Use Cases Outside of Imputation: </strong> This is more than a simple imputation problem. There
+            may be cases where an aid worker is dealing with a person who refuses to answer whether or not
+            they are being abused. The aid worker can use other questions to see if this person is more
+            similar to someone who answered "yes" to domestic abuse, than someone who answered "no."
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Imputation Models</div>
+        <div class="panel-body">
+          <p>
+            <strong> Possible Solutions: </strong>
+            <ul>
+              <li>Decision Tree model using other columns to predict imputed column</li>
+              <li>Use k-Nearest-Neighbors to find "most similar" respondents</li>
+            </ul>
+          </p>
+          <p>
+            <strong>Proposed Solution: </strong> Due to the high dimensionality of the data,
+            I will first constrain the feature space to the top 3-5 features with the
+            highest correlation to the target (domestic abuse). After this,
+            the problem can be tackled through knn, naive bayes, or logistic regression.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<hr>
+
+<!-- ************************ -->
+<!-- ** Contribute to this ** -->
+<!-- ************************ -->
+
+<div class="row">
+  <div class="page-header">
+    <h1>Contribute </h1>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="page-header">
+      <h2><small>to</small> Organizations</h2>
+    </div>
+    <ul class="media-list">
+      <li class="media">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object" src="..." alt="...">
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">Check out CityTeam San Jose</h4>
+          CityTeam is an organization that engages in life-changing work, helping
+          men beat drug, alcohol, and crime. They are a faith-based organization
+          that has helped thousands of men turn their lives around.
+          <a href="https://www.cityteam.org/san-jose/">CityTeam</a>
+        </div>
+      </li>
+      <li class="media">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object" src="..." alt="...">
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">Enjoy a meal every Sunday</h4>
+          Believers in Christ Ministry is a faith-based organization
+          that provides meals to homeless in San Jose every Sunday.
+          <a href="http://www.believersinchristministry.com/">Click here to learn more.</a>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="col-lg-6">
+    <div class="page-header">
+      <h2><small>to</small> this Github</h2>
+    </div>
+    <p>
+      The code, data, and analysis is all open-source and available on
+      <a href="https://github.com/MichaelJulian/scch-census"> my Github</a>
+    </p>
+  </div>
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+{% endblock %}
